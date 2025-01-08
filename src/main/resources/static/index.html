@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center mb-4">User List</h1>
+    <table class="table table-bordered table-striped shadow-sm">
+        <thead class="thead-dark">
+        <tr>
+            <th>User ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Created At</th>
+        </tr>
+        </thead>
+        <tbody id="userTableBody">
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    fetch('/api/test/list')
+        .then(response => response.json())
+        .then(users => {
+            const tableBody = document.getElementById('userTableBody');
+            users.forEach(user => {
+                console.log(user);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                        <td>${user.userID}</td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td>${user.createAt}</td>
+                    `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+</script>
+</body>
+</html>
